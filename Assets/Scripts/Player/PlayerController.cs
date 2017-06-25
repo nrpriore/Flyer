@@ -122,7 +122,7 @@ public class PlayerController : MonoBehaviour {
 			_rot = Mathf.Clamp(_rot, MIN_ROT, MAX_ROT);
 		}else{
 			// Happens once on crash
-			GameController.UpdateStatData();
+			GameController.PostGame();
 			_vel = 0;
 			enabled = false;
 		}

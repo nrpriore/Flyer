@@ -1,6 +1,8 @@
 ﻿using UnityEngine;					// To inherit from MonoBehaviour
 using UnityEngine.UI;				// To display Canvas elements
 using System.Collections.Generic;	// For lists
+using UnityEngine.EventSystems;		// To edit Event System
+using UnityEngine.SceneManagement;	// To switch scenes
 
 public class GameController : MonoBehaviour {
 
@@ -16,6 +18,10 @@ public class GameController : MonoBehaviour {
 	private float _sumDeltaTime;
 	public static float AvgDeltaTime;
 #endregion
+
+	// UI
+	public static Button Restart;
+	public static Button Menu;
 
 	// Test UI/misc vars
 	public Text _gas;
@@ -48,6 +54,10 @@ public class GameController : MonoBehaviour {
 
 		Gravity = 10;
 		Wind = 0.8f;
+
+		// For development
+		Restart = GameObject.Find("Restart").GetComponent<Button>();
+		Menu = GameObject.Find("BackToMenu").GetComponent<Button>();
 	}
 
 	void Update () {
@@ -78,13 +88,14 @@ public class GameController : MonoBehaviour {
 			_vel.text 		= "Vel: " + _UIVel;
 			_fps.text 		= "FPS: " + (1/AvgDeltaTime);
 			_dist.text 		= ((int)_UIDist).ToString();
-		}else {
-			if(Input.touchCount > 0 || Input.GetKey("r")) {
-				RestartGame();
-			}
 		}
 	}
 
+	public static void PostGame() {
+		Restart.gameObject.transform.localPosition += Vector3.up * 2000;
+		Menu.gameObject.transform.localPosition += Vector3.up * 2000;
+		UpdateStatData();
+	}
 	public static void UpdateStatData() {
 		PlayerPrefs.SetInt("Coins", PlayerPrefs.GetInt("Coins") + (int)(Player.Distance/50f));
 	}
@@ -102,8 +113,14 @@ public class GameController : MonoBehaviour {
 	}
 
 	// Restarts game straight from the crash screen
-	private void RestartGame() {
+	public void StartGame() {
+		EventSystem.current.GetComponent<EventSystem>().SetSelectedGameObject(null);
+		Restart.gameObject.transform.localPosition += Vector3.up * -2000;
+		Menu.gameObject.transform.localPosition += Vector3.up * -2000;
 		InitGameObjects();
+	}
+	public void BackToMenu() {
+		SceneManager.LoadScene("Menu",LoadSceneMode.Single);
 	}
 
 }

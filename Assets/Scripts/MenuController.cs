@@ -1,6 +1,7 @@
 using UnityEngine; 					// To inherit from MonoBehaviour
 using UnityEngine.UI;				// To access UI components
 using System.Collections.Generic;	// For lists
+using UnityEngine.EventSystems;		// To edit event system
 using UnityEngine.SceneManagement;	// To switch scenes
 
 public class MenuController : MonoBehaviour {
@@ -163,6 +164,7 @@ public class MenuController : MonoBehaviour {
 	}
 
 	public void TogglePregameScreen(string action) {
+		EventSystem.current.GetComponent<EventSystem>().SetSelectedGameObject(null);
 		if(InPreGame && action == "open") {
 			PlayButton();
 			return;
@@ -180,6 +182,7 @@ public class MenuController : MonoBehaviour {
 	}
 
 	public void ToggleSettingsScreen(string action) {
+		EventSystem.current.GetComponent<EventSystem>().SetSelectedGameObject(null);
 		_settingsTimer = 0f;
 		if(action == "open") {
 			_settingsCollapse = false;
