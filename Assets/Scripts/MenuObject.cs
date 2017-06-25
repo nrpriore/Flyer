@@ -2,6 +2,7 @@
 
 public class MenuObject : MonoBehaviour {
 
+
 	void Update () {
 		// Move objects up every frame
 		gameObject.transform.localPosition += Vector3.up * Time.deltaTime;

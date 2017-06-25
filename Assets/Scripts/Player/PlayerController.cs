@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour {
 
 	private const float INIT_ROT = 30;			// Initial rotation
 	private const float INIT_VEL = 1500;		// Initial velocity
-	private const float INIT_HEIGHT = 5000;		// Initial height
+	private const float INIT_HEIGHT = 5;		// Initial height
 
 	private float _power;			// Strength of increase in velocity when accelerating
 	private float _maxGas;			// Maximum amount of gas player can hold
@@ -122,6 +122,7 @@ public class PlayerController : MonoBehaviour {
 			_rot = Mathf.Clamp(_rot, MIN_ROT, MAX_ROT);
 		}else{
 			// Happens once on crash
+			GameController.UpdateStatData();
 			_vel = 0;
 			enabled = false;
 		}
@@ -129,8 +130,8 @@ public class PlayerController : MonoBehaviour {
 
 	// Update player values after background moves (called from there)
 	public void UpdatePlayer() {
-		Height += YVel;
-		Distance += XVel;
+		Height += YVel / 1000f;
+		Distance += XVel / 1000f;
 	}
 
 	// Update player values after colliding with an object (called from respective object and passes in name)

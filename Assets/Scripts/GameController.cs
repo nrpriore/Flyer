@@ -69,9 +69,9 @@ public class GameController : MonoBehaviour {
 		// For development - update screen values and enable restart
 		if(Playing) {
 			float _UIGas 	= Player.CurGas;
-			float _UIHeight = Player.Height / 1000f;
+			float _UIHeight = Player.Height;
 			float _UIVel	= Player.Vel / 100f;
-			float _UIDist 	= Player.Distance / 1000f;
+			float _UIDist 	= Player.Distance;
 
 			_gas.text 		= "Gas: " + _UIGas;
 			_height.text 	= "Height: " + _UIHeight;
@@ -83,6 +83,10 @@ public class GameController : MonoBehaviour {
 				RestartGame();
 			}
 		}
+	}
+
+	public static void UpdateStatData() {
+		PlayerPrefs.SetInt("Coins", PlayerPrefs.GetInt("Coins") + (int)(Player.Distance/50f));
 	}
 
 	// Initiate anything required to start the game
